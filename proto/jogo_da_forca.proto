@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+message Player {
+    string name = 1;
+}
+
+message StateOfGame {
+    repeated Player players = 2;
+    string wrongLetters = 3;
+    string correctLetters = 4;
+    string playerTurn = 5;
+    string secretWord = 6;
+    bool gameStarted = 7;
+}
+
+message BoolResponse {
+    bool result = 9;
+}
+
+message LetterGuess {
+    string letter = 10;
+}
+
+message StringResponse {
+    string result = 11;
+}
+
+// Parâmetro da requisição vazia, na documentação há um tipo vazio mas só pode ser usado na linguagem GO
+message Empty {}
+
+service JogoDaForcaService {
+
+    rpc AddPlayer (Player) returns (Player) {}
+
+    rpc RequestStateOfGame (Player) returns (StateOfGame) {}
+    
+    rpc AddGuessToCorrectLetters (LetterGuess) returns (Empty);
+
+    rpc AddGuessToWrongLetters (LetterGuess) returns (Empty);
+
+    rpc PlayerWon (Empty) returns (BoolResponse);
+    
+    rpc SetGameStartFalse (Empty) returns (Empty);
+
+    rpc SetGameStartTrue (Empty) returns (Empty);
+
+    rpc ChangeTurn (Empty) returns (Empty);
+   
+    
+}
